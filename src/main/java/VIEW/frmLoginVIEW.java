@@ -34,18 +34,18 @@ public class frmLoginVIEW extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        txtNomeUsuario = new javax.swing.JTextField();
+        txtEmailUsuario = new javax.swing.JTextField();
         txtSenhaUsuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Nome de usuário");
+        jLabel1.setText("Email de usuário");
 
-        txtNomeUsuario.addActionListener(new java.awt.event.ActionListener() {
+        txtEmailUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeUsuarioActionPerformed(evt);
+                txtEmailUsuarioActionPerformed(evt);
             }
         });
 
@@ -77,7 +77,7 @@ public class frmLoginVIEW extends javax.swing.JFrame {
                         .addGap(96, 96, 96)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtEmailUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -86,7 +86,7 @@ public class frmLoginVIEW extends javax.swing.JFrame {
                 .addGap(70, 70, 70)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmailUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
                 .addComponent(jLabel2)
                 .addGap(5, 5, 5)
@@ -99,21 +99,26 @@ public class frmLoginVIEW extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNomeUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeUsuarioActionPerformed
+    private void txtEmailUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeUsuarioActionPerformed
+        String email = txtEmailUsuario.getText();
+        if (!email.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b")) {
+            JOptionPane.showMessageDialog(null, "Por favor, digite um email válido.");
+            txtEmailUsuario.requestFocus();
+        }
+    }//GEN-LAST:event_txtEmailUsuarioActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
-            String nome_usuario, senha_usuario;
+            String email_usuario, senha_usuario;
 
-            nome_usuario = txtNomeUsuario.getText();
+            email_usuario = txtEmailUsuario.getText(); // Atualize para obter o valor do campo de texto de email
             senha_usuario = txtSenhaUsuario.getText();
 
             UsuarioDTO objUsuarioDTO = new UsuarioDTO();
-            objUsuarioDTO.setNome_usuario(nome_usuario);
+            objUsuarioDTO.setEmail_usuario(email_usuario); // Atualize para definir o valor do email no objeto UsuarioDTO
             objUsuarioDTO.setSenha_usuario(senha_usuario);
-            
+
             UsuarioDAO objusuariodao = new UsuarioDAO();
             ResultSet rsusuariodao = objusuariodao.autenticacaoUsuario(objUsuarioDTO);
 
@@ -123,7 +128,7 @@ public class frmLoginVIEW extends javax.swing.JFrame {
                 objfrmprincipalview.setVisible(true);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "Usuário ou Senha inválidos");
+                JOptionPane.showMessageDialog(null, "Email ou Senha inválidos");
             }
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "FormLoginView" + erro);
@@ -169,7 +174,7 @@ public class frmLoginVIEW extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txtNomeUsuario;
+    private javax.swing.JTextField txtEmailUsuario;
     private javax.swing.JTextField txtSenhaUsuario;
     // End of variables declaration//GEN-END:variables
 }
